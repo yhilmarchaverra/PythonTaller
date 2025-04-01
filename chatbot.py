@@ -4,58 +4,61 @@
 # Registrar todas las interacciones en un archivo de logs usando logging - OPCIONAL 
 # Permitir la ejecución de comandos del sistema si el usuario lo solicita. 
 
-
 import os
 import logging
 import subprocess
 
-def load_environment_variables():
-    return {
-        "USER_NAME":os.getenv("USER_NAME", "Usuario")
-    }
+# Configuración de logs
+logging.basicConfig(
+    filename="logs_chatbot.log",
+    level=logging.INFO,
+    format="%(asctime)s - %(message)s",
+    encoding="utf-8"
+)
 
-def setup_logging():
-    logging.basicConfig(
-        filename="logs_chatbot.log",
-        level=logging.INFO,
-        format="%(asctime)s - %(levelname)s - %(message)s"
-    )
+# Obtener el nombre del usuario desde variables de entorno
+USER_NAME = os.environ.get("USER_NAME", "Usuario")
 
-def execute_command(command):
-    try: 
-        result = subprocess.run(
-            ["cmd","/c", command],
-            capture_output=True,
-            text=True
-        )
-        return result.stdout if result.stdout else "Comando {command} ejecutado sin salida"
-    
-    except Exception as e:
-        return f"Error ejecutando el comando '{command}' {e}"
+# Respuestas predefinidas
+RESPUESTAS = {
+    "hola": f"Hola {USER_NAME}! ¿En qué puedo ayudarte?",
+    "adios": "Hasta luego, que tengas un buen día!",
+    "comando": "Dime qué comando del sistema quieres ejecutar:"
+}
 
+def ejecutar_comando():
+    while True:
+        comando = input("Escribe el comando CMD que deseas ejecutar -> ").strip()
+        if comando == "salir":
+            print("Saliendo del modo de comandos. ")
+            break
+        result = subprocess.run(["cmd", "/c", comando], capture_output=True, text=True)
+        print(result.stdout if result.stdout else f"Comando '{comando}' ejecutado sin salida.")
+        logging.info(f"Comando ejecutado: {comando}")
+        logging.info(f"Salida del comando: {result.stdout}")
 
 def chatbot():
-    setup_logging()
-    env_vars = load_environment_variables()
-
-    predefined_response = {
-        "hola": f"Hola {env_vars["USER_NAME"]}! ¿En qué puedo ayudarte? ",
-        "adios": "Hasta luego, que tengas un buen día! ",
-        "comando": "Dime qué comando del sistema quieres ejecutar:"
-    }
-
+    print("Bienvenido al chatbot! Escribe 'salir' para terminar.")
+    
     while True:
-        user_input = input("Chatbot iniciado. Escribe 'salir' para terminar. ").strip().lower()
-        logging.info(f"Usuario: {user_input}")
-        if user_input == "salir":
-            break
-        elif user_input == "comando":
-            command = input("Escribe el comando que deseas ejecutar: ")
-            response = execute_command(command)
-        else:
-            response = predefined_response.get(user_input, "No entiendo esa orden. ")
-        
-        logging.info(f"Chatbot: {response}")
-        print(response)
+        try:
+            entrada = input("-> ").strip().lower()
+            logging.info(f"Usuario: {entrada}")
 
-chatbot()
+            if entrada in ["salir", "adios"]:
+                print(RESPUESTAS["adios"])
+                break
+            elif entrada == "comando":
+                ejecutar_comando()
+            else:
+                respuesta = RESPUESTAS.get(entrada, "No entiendo esa orden.")
+
+            if (entrada != "comando"):
+                logging.info(f"Chatbot: {respuesta}")
+                print(respuesta)
+        except KeyboardInterrupt:
+            print("\n", RESPUESTAS["adios"])
+            break
+
+if __name__ == "__main__":
+    chatbot()
