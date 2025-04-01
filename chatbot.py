@@ -28,7 +28,7 @@ RESPUESTAS = {
 
 def ejecutar_comando():
     while True:
-        comando = input("Escribe el comando CMD que deseas ejecutar -> ").strip()
+        comando = input(f"{RESPUESTAS['comando']} -> ").strip()
         if comando == "salir":
             print("Saliendo del modo de comandos. ")
             break
