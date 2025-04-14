@@ -24,8 +24,8 @@ Este proyecto implementa un chatbot web interactivo usando **Python**, **FastAPI
 ### 1. Clona el repositorio
 
 ```bash
-git clone https://github.com/tu_usuario/chatbot-web.git
-cd chatbot-web
+git clone https://github.com/yhilmarchaverra/PythonTaller.git
+cd Chatbot
 ```
 
 ### 2. Crea un entorno virtual
