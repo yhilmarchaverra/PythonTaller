@@ -10,4 +10,4 @@ __pycache__/
 # ignore environment variables file
 .env
 # ignore comandos de terminal
-.comandos
+comandos.txt
