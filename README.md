@@ -1,48 +1,89 @@
-# Chatbot en Python
+# 🤖 Chatbot Web con FastAPI
 
-## Descripción
-Este proyecto consiste en la creación de un chatbot en Python que interactúa con el usuario desde la terminal. El chatbot puede responder con frases predefinidas, personalizar respuestas según variables de entorno, registrar interacciones en un archivo de logs y ejecutar comandos del sistema cuando el usuario lo solicite.
+## 🧠 Descripción
 
-## Objetivos
-- Recibir mensajes desde la terminal y permitir la interacción con el usuario.
-- Responder con frases predefinidas según la entrada del usuario.
-- Personalizar respuestas leyendo variables de entorno.
-- **(Opcional)** Registrar todas las interacciones en un archivo de logs usando `logging`.
-- Permitir la ejecución de comandos del sistema si el usuario lo solicita.
+Este proyecto implementa un chatbot web interactivo usando **Python**, **FastAPI** y **HTML/CSS/JavaScript**. El chatbot puede responder a preguntas predefinidas, personalizar respuestas mediante variables de entorno, registrar las conversaciones (opcional) y ejecutar comandos del sistema desde la interfaz web.
 
-## Requisitos Técnicos
-Para completar este reto, se deben utilizar las siguientes librerías de Python:
+## 🎯 Objetivos
 
-- `os` y `sys`: Para interactuar con el sistema operativo.
-- `subprocess`: Para ejecutar comandos del sistema.
-- `logging`: Para registrar mensajes en un archivo de log.
+- Permitir interacción con el chatbot desde una interfaz web tipo terminal.
+- Personalizar respuestas mediante variables de entorno.
+- Ejecutar comandos del sistema al escribir instrucciones específicas (`cmd`).
+- (Opcional) Registrar todas las interacciones usando `logging`.
 
-## Lo que Aprenderás
-- Usar las librerías `os` y `sys` para manejar el sistema operativo.
-- Ejecutar comandos del sistema con `subprocess`.
-- Leer variables de entorno con `os.getenv()`.
-- Registrar eventos en un archivo de logs con `logging`.
-- Construir un chatbot funcional en Python que interactúe en la terminal.
+## ⚙️ Tecnologías Utilizadas
 
-## Instalación y Uso
-### Requisitos Previos
-- Tener instalado Python 3.x en el sistema.
+- Python 3.x
+- FastAPI
+- Uvicorn (servidor ASGI)
+- HTML + CSS + JS
+- `os`, `sys`, `subprocess`, `logging`
 
-### Instalación
-1. Clona este repositorio o descarga los archivos del proyecto.
-2. Asegúrate de que tienes Python instalado en tu sistema.
+## 📦 Instalación
 
-### Ejecución
-Para ejecutar el chatbot, abre una terminal y corre el siguiente comando:
-```sh
-python chatbot.py
+### 1. Clona el repositorio
+
+```bash
+git clone https://github.com/tu_usuario/chatbot-web.git
+cd chatbot-web
 ```
 
-### Uso
-- Escribe un mensaje y presiona `Enter` para interactuar con el chatbot.
-- Usa comandos predefinidos para recibir respuestas específicas.
-- Introduce comandos del sistema (si está habilitado) para ejecutarlos directamente desde el chatbot.
+### 2. Crea un entorno virtual
 
-## Registro de Interacciones (Opcional)
-Si se habilita el registro de interacciones, el chatbot almacenará todas las conversaciones en un archivo de log. Esto es útil para auditoría y depuración.
+#### 🔹 En Windows:
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+#### 🔸 En Linux/macOS:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### 3. Instala las dependencias
+
+```bash
+pip install -r requirements.txt
+```
+
+## 🚀 Ejecución
+
+### Ejecuta el servidor FastAPI con Uvicorn:
+
+```bash
+uvicorn api:app --reload
+```
+
+Esto abrirá el servidor en `http://127.0.0.1:8000`.
+
+Abre tu navegador y accede a esa URL para comenzar a interactuar con el chatbot.
+
+## 💬 Uso
+
+- Escribe un mensaje en la interfaz web.
+- Para ejecutar un comando del sistema, inicia el mensaje con `cmd`.  
+  Ejemplos:  
+  - `cmd dir` (en Windows)  
+  - `cmd ls -la` (en Linux/macOS)
+- Para **cerrar el servidor**, puedes escribir `salir` o `adios` en el chat.
+
+## 📝 Registro de Interacciones (Opcional)
+
+Si se activa, el chatbot puede guardar todas las conversaciones en un archivo `chat.log`.  
+Esto es útil para auditoría o depuración.
+
+## 📁 Estructura del Proyecto
+
+```
+├── api.py                 # Backend con FastAPI
+├── chatbot.py             # Lógica del chatbot y ejecución de comandos
+├── requirements.txt       # Dependencias del proyecto
+└── static/
+    ├── terminal.html      # Interfaz del chatbot
+    └── styles.css         # Estilos personalizados
+```
 
