@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatbot Web</title>
+    <style>
+        body { background: #1e1e1e; color: #33ff33; font-family: monospace; padding: 20px; }
+        input, button { background: black; color: #33ff33; border: 1px solid #33ff33; padding: 5px; }
+        #output { white-space: pre-wrap; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Chatbot Web</h2>
+    <input type="text" id="mensaje" placeholder="Escribe un mensaje o comando ..." size="50" />
+    <button onclick="enviar()">Enviar</button>
+    <div id="output"></div>
+
+    <script>
+        async function enviar() {
+            const input = document.getElementById("mensaje");
+            const msg = input.value;
+            input.value = "";
+
+            const res = await fetch('/mensaje', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ mensaje: msg })
+            });
+
+            const data = await res.json();
+            document.getElementById("output").innerText += `\n> ${msg}\n${data.respuesta}`;
+        }
+    </script>
+</body>
+</html>
