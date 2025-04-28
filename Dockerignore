@@ -1,2 +1,12 @@
 Dockerfile
 .gitignore
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.env
+*.sqlite3
+.git/
+.vscode/
+.idea/

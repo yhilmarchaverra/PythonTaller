@@ -18,6 +18,7 @@ Este proyecto implementa un chatbot web interactivo usando **Python**, **FastAPI
 - Uvicorn (servidor ASGI)
 - HTML + CSS + JS
 - `os`, `sys`, `subprocess`, `logging`
+- Docker
 
 ## 📦 Instalación
 
@@ -33,15 +34,15 @@ cd Chatbot
 #### 🔹 En Windows:
 
 ```bash
-python -m venv venv
-venv\Scripts\activate
+python -m venv venv #Crea una carpeta llamada venv.
+venv\Scripts\activate #"Activa" el entorno virtual.
 ```
 
 #### 🔸 En Linux/macOS:
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv venv #Crea una carpeta llamada venv.
+source venv/bin/activate #"Activa" el entorno virtual.
 ```
 
 ### 3. Instala las dependencias
@@ -86,4 +87,16 @@ Esto es útil para auditoría o depuración.
     ├── terminal.html      # Interfaz del chatbot
     └── styles.css         # Estilos personalizados
 ```
+# Dockerizar la aplicación
+## Login en Dockerhub
+## Crear imagen
+Para crear una imagen utilizamos la opción build de Docker con la bandera "-t" luego el nombre que le queremos poner a la imagen antes de los dos puntos, que en este caso seria chatboot y despues de los  " : " la versión de nuestra imagen que por defecto dejaremos latest finalizada por un " . " que indica el directorio actual donde se construira la imagen.
+```bash
+docker build -t chatboot:latest .
+```
+ Después de construirla, si quieres subirla (por ejemplo a DockerHub o a un ECR privado), debes:
 
+ Etiquetarla hacia el repo de destino:
+```bash
+ docker tag chatboot:latest usuario-dockerhub/chatboot:latest
+```
