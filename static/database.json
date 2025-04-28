@@ -1,0 +1,5 @@
+{
+    "hola": "Hola {USERNAME}! ¿En qué puedo ayudarte?",
+    "adios": "Hasta luego, que tengas un buen día!",
+    "comando": "Escribe CMD y luego el comando que quieras ejecutar"
+}
