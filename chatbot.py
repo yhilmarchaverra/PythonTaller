@@ -1,7 +1,9 @@
 import os
+import json
 import logging
 import subprocess
 import platform
+from dotenv import load_dotenv
 
 # Configurar logs
 logging.basicConfig(
@@ -11,27 +13,39 @@ logging.basicConfig(
     encoding="utf-8"
 )
 
-USER_NAME = os.environ.get("USER_NAME", "Usuario")
+def read_name():
+    # Cargar variables de entorno desde .env si existe
+    load_dotenv()
+    return os.environ.get("USER_NAME", "Usuario")
 
-RESPUESTAS = {
-    "hola": f"Hola {USER_NAME}! ¿En qué puedo ayudarte?",
-    "adios": "Hasta luego, que tengas un buen día!",
-    "comando": "Dime qué comando del sistema quieres ejecutar:"
-}
+def cargar_respuestas():
+    try:
+        ruta = os.path.join("static", "database.json")
+        with open(ruta, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        logging.error(f"Error cargando respuestas: {e}")
+        return {}
 
 def responder_chatbot(mensaje: str):
     mensaje = mensaje.strip().lower()
+    respuestas = cargar_respuestas()
+    username = read_name()
+    
     logging.info(f"Usuario: {mensaje}")
-
+    
     if mensaje in ["salir", "adios"]:
-        respuesta = RESPUESTAS["adios"]
+        plantilla = respuestas.get("adios", "Hasta luego.")
     elif mensaje == "hola":
-        respuesta = RESPUESTAS["hola"]
+        plantilla = respuestas.get("hola", "Hola.")
     elif mensaje == "comando":
-        respuesta = RESPUESTAS["comando"]
+        plantilla = respuestas.get("comando", "Escribe un comando.")
     else:
-        respuesta = RESPUESTAS.get(mensaje, "No entiendo esa orden.")
-
+        plantilla = respuestas.get(mensaje, "No entiendo esa orden.")
+    
+    # Insertar el nombre del usuario si está en la plantilla
+    respuesta = plantilla.format(USERNAME=username)
+    
     logging.info(f"Chatbot: {respuesta}")
     return respuesta
 
@@ -48,5 +62,5 @@ def ejecutar_comando_directo(comando: str):
         logging.info(f"Salida del comando: {salida}")
         return salida
     except Exception as e:
+        logging.error(f"Error ejecutando el comando: {str(e)}")
         return f"Error ejecutando el comando: {str(e)}"
-
