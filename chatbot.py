@@ -16,7 +16,7 @@ logging.basicConfig(
 def read_name():
     # Cargar variables de entorno desde .env si existe
     load_dotenv()
-    return os.environ.get("USERNAME", "Usuario")
+    return os.environ.get("USER_NAME", "Usuario")
 
 def cargar_respuestas():
     try:

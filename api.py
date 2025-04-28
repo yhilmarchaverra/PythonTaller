@@ -17,7 +17,7 @@ async def guardar_nombre(request: Request):
     data = await request.json()
     nombre = data.get("username", "")
     if nombre:
-        set_key(".env", "USERNAME", nombre)
+        set_key(".env", "USER_NAME", nombre)
     return {"ok": True}
 
 @app.get("/terminal", response_class=HTMLResponse)
