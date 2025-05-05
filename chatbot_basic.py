@@ -22,14 +22,12 @@ USER_NAME = os.environ.get("USER_NAME", "Usuario")
 # Respuestas predefinidas
 RESPUESTAS = {
     "hola": f"Hola {USER_NAME}! ¿En qué puedo ayudarte?",
-    "adios": "Hasta luego, que tengas un buen día!",
-    "comando": "Dime qué comando del sistema quieres ejecutar:"
+    "adios": "Hasta luego, que tengas un buen día!"
 }
 
 def ejecutar_comando():
     while True:
         comando = input("Escribe el comando CMD que deseas ejecutar -> ").strip()
-        comando = input(f"{RESPUESTAS['comando']} -> ").strip()
         if comando == "salir":
             print("Saliendo del modo de comandos. ")
             break

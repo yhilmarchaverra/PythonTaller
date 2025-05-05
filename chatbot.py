@@ -3,7 +3,7 @@ import json
 import logging
 import subprocess
 import platform
-from dotenv import load_dotenv
+from dotenv import dotenv_values
 
 # Configurar logs
 logging.basicConfig(
@@ -14,9 +14,12 @@ logging.basicConfig(
 )
 
 def read_name():
-    # Cargar variables de entorno desde .env si existe
-    load_dotenv()
-    return os.environ.get("USER_NAME", "Usuario")
+    # Forzar recarga de .env
+    env_vars = dotenv_values(".env")  # Devuelve un dict con las variables actuales del archivo
+    username = env_vars.get("USER_NAME", "Usuario")
+    os.environ["USER_NAME"] = username  # Sobrescribir en os.environ
+    print(username)
+    return username
 
 def cargar_respuestas():
     try:
